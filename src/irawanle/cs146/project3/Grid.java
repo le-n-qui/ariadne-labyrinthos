@@ -24,5 +24,12 @@ public class Grid {
 		}
 	}
 	
+	/**
+	 * numOfCells method
+	 * @return total number of cells
+	 */
+	public int numOfCells() {
+		return size*size;
+	}
 	
 }
