@@ -43,6 +43,17 @@ public class MazeModel {
 		Random randSelect = new Random();
 		// Set seed to produce the same result everytime
 		randSelect.setSeed(totalCells);
-				
+		// A while loop
+		while (numVisitedCells < totalCells) {
+			// find all neighbors of currentCell with all walls intact
+			// if one or more neighbors found, choose one at random
+				// remove wall between this selected neighbor and currentCell
+				// push currentCell into cellStack
+				// update currentCell with this new neighbor
+				// increment numVisitedCells by 1
+			// otherwise
+				// pop the most recent cell entry off the cellStack
+				// make it currentCell
+		}
 	}
 }
