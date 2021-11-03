@@ -38,6 +38,11 @@ public class MazeModel {
 		// Cell at (START_COORD_X, START_COORD_Y) will be the starting point
 		Vertex currentCell = theMaze.getCell(START_COORD_X,START_COORD_Y); 
 		// Track number of visited cells
-		int numVisitedCells = 1
+		int numVisitedCells = 1;
+		// Create a Random generator
+		Random randSelect = new Random();
+		// Set seed to produce the same result everytime
+		randSelect.setSeed(totalCells);
+				
 	}
 }
