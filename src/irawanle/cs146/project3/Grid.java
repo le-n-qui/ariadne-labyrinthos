@@ -32,4 +32,12 @@ public class Grid {
 		return size*size;
 	}
 	
+	/**
+	 * getCell method
+	 * @return reference to the cell
+	 */
+	public Vertex getCell(int x_loc, int y_loc) {
+		return mazeGrid[x_loc][y_loc];
+	}
+	
 }
