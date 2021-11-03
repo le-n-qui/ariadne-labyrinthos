@@ -6,6 +6,8 @@ import java.util.Deque;
 public class MazeModel {
 	private final int START_COORD_X = 0;
 	private final int START_COORD_Y = 0;
+	private int end_coord_x;
+	private int end_coord_y;
 	private Grid theMaze;
 	
 	/**
@@ -14,6 +16,11 @@ public class MazeModel {
 	 */
 	public MazeModel(Grid maze) {
 		theMaze = maze;
+		// the last cell in grid has
+		// x coordinate to be n - 1
+		end_coord_x = theMaze.getLimitOfGrid() - 1;
+		// also, y coordinate is n - 1
+		end_coord_y = theMaze.getLimitOfGrid() - 1;
 	}
 	
 	/**
