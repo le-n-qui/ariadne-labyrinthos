@@ -4,17 +4,30 @@ public class Vertex {
 	private boolean [] direction = {false, false, false, false};
 	private String color;
 	private Vertex parent;
-    //private int [] coordinates = new int[2];
+    private int x_coord;
+    private int y_coord;
 	
-	/*
-	 * Constructor
+	/**
+	 * No-arg Constructor
 	 */
 	public Vertex() {
 		parent = null;
 		color = "white";
 	}
 	
-	/*
+	/**
+	 * Constructor
+	 * @param x x_coordinate
+	 * @param y y_coordinate
+	 */
+	public Vertex(int x, int y) {
+		parent = null;
+		color = "white";
+		x_coord = x;
+		y_coord = y;
+	}
+	
+	/**
 	 * setDirection method
 	 * 0 - North
 	 * 1 - East
@@ -26,7 +39,7 @@ public class Vertex {
 		direction[index] = true;
 	}
 	
-	/*
+	/**
 	 * setColor method
 	 * white - unexplored
 	 * grey - discovered
@@ -37,7 +50,7 @@ public class Vertex {
 		color = c;
 	}
 	
-	/*
+	/**
 	 * getColor method
 	 * @return color 
 	 */
@@ -45,7 +58,7 @@ public class Vertex {
 		return color;
 	}
 	
-	/*
+	/**
 	 * setParent method
 	 * @param p parent vertex
 	 */
@@ -53,12 +66,28 @@ public class Vertex {
 		parent = p;
 	}
 	
-	/*
+	/**
 	 * getParent method
 	 * @return parent vertex
 	 */
 	public Vertex getParent() {
 		return parent;
+	}
+	
+	/**
+	 * getCoordX method
+	 * @return x coordinate of vertex
+	 */
+	public int getCoordX() {
+		return x_coord;
+	}
+	
+	/**
+	 * getCoordY method
+	 * @return y coordinate of vertex
+	 */
+	public int getCoordY() {
+		return y_coord;
 	}
 	
 //	public void setCoordinates(int x, int y) {
