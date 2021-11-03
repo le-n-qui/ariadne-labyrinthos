@@ -33,6 +33,14 @@ public class Grid {
 	}
 	
 	/**
+	 * getLimitOfGrid method
+	 * @return the size of the n x n  grid
+	 */
+	public int getLimitOfGrid() {
+		return size;
+	}
+	
+	/**
 	 * getCell method
 	 * @return reference to the cell
 	 */
