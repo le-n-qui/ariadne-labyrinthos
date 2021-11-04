@@ -31,7 +31,7 @@ public class MazeModel {
 	 * form a path from starting and 
 	 * ending vertices. 
 	 */
-	private void buildMaze() {
+	public void buildMaze() {
 		// Create stack to keep track of cells as they are visited
 		Deque<Vertex> cellStack = new ArrayDeque<Vertex>();
 		// Total number of cells in maze
@@ -51,15 +51,19 @@ public class MazeModel {
 			int currLocY = currentCell.getCoordY();
 			if (currLocX - 1 >= 0) {
 				// current cell has a neighbor to the North
+				currentCell.neighborPresentAt(0);
 			}
-			if (currLocX + 1 < theMaze.getLimitOfGrid()) {
+			if (currLocX + 1 < end_coord_x) {
 				// current cell has a neighbor to the South
+				currentCell.neighborPresentAt(2);
 			}
-			if (currLocY + 1 < theMaze.getLimitOfGrid()) {
+			if (currLocY + 1 < end_coord_y) {
 				// current cell has a neighbor to the East
+				currentCell.neighborPresentAt(1);
 			}
 			if (currLocY - 1 >= 0) {
 				// current cell has a neighbor to the West
+				currentCell.neighborPresentAt(3);
 			}
 			// if one or more neighbors found, choose one at random
 				// remove wall between this selected neighbor and currentCell
