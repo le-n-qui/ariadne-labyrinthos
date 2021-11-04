@@ -1,7 +1,7 @@
 package irawanle.cs146.project3;
 
 public class Vertex {
-	private boolean [] direction = {false, false, false, false};
+	private boolean [] neighbors = {false, false, false, false};
 	private String color;
 	private Vertex parent;
     private int x_coord;
@@ -28,15 +28,15 @@ public class Vertex {
 	}
 	
 	/**
-	 * setDirection method
+	 * neighborPresentAt() method
 	 * 0 - North
 	 * 1 - East
 	 * 2 - South
 	 * 3 - West
 	 * @param index direction
 	 */
-	public void setDirection(int index){
-		direction[index] = true;
+	public void neighborPresentAt(int index){
+		neighbors[index] = true;
 	}
 	
 	/**
