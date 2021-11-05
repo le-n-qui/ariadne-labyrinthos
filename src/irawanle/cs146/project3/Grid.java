@@ -11,6 +11,7 @@ public class Grid {
 	public Grid(int gridSize) {
 		mazeGrid = new Vertex[gridSize][gridSize];
 		size = gridSize;
+		populateGrid();
 	}
 	
 	/**
