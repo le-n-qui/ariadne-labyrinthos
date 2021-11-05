@@ -1,7 +1,7 @@
 package irawanle.cs146.project3;
 
 public class Vertex {
-	private boolean [] neighbors = {false, false, false, false};
+	private boolean[] walls = {false, false, false, false};
 	private String color;
 	private Vertex parent;
     private int x_coord;
@@ -36,7 +36,7 @@ public class Vertex {
 	 * @param index direction
 	 */
 	public void neighborPresentAt(int index){
-		neighbors[index] = true;
+		walls[index] = true;
 	}
 	
 	/**
