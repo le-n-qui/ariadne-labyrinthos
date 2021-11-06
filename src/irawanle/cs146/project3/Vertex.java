@@ -62,6 +62,13 @@ public class Vertex {
 	}
 	
 	/**
+	 * getWallStatus method
+	 */
+	public boolean[] getWallStatus() {
+		return walls;
+	}
+	
+	/**
 	 * setColor method assigns color to vertex
 	 * white - unexplored
 	 * grey - discovered
