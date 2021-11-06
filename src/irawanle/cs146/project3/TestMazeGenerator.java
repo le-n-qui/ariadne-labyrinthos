@@ -1,24 +1,25 @@
 package irawanle.cs146.project3;
 
+/*
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+*/
 class TestMazeGenerator {
 
-	@BeforeAll
+	//@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 	}
 
-	@BeforeEach
+	//@BeforeEach
 	void setUp() throws Exception {
 	}
 
-	@Test
+	//@Test
 	void test() {
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
 	}
 
 }
