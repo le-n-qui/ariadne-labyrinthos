@@ -1,10 +1,15 @@
 package irawanle.cs146.project3;
 
 public class Vertex {
+	// boolean array indicating availability of walls surrounding vertex
 	private boolean[] walls = {true, true, true, true};
+	// vertex color
 	private String color;
+	// parent vertex 
 	private Vertex parent;
+	// X coordinate
     private int x_coord;
+    // Y coordinate
     private int y_coord;
 	
 	/**
@@ -16,7 +21,7 @@ public class Vertex {
 	}
 	
 	/**
-	 * Constructor
+	 * Constructor with x and y coordinates
 	 * @param x x_coordinate
 	 * @param y y_coordinate
 	 */
@@ -28,7 +33,7 @@ public class Vertex {
 	}
 	
 	/**
-	 * neighborPresentAt() method
+	 * neighborPresentAt method breaks down a wall at a particular direction
 	 * 0 - North
 	 * 1 - East
 	 * 2 - South
@@ -40,7 +45,24 @@ public class Vertex {
 	}
 	
 	/**
-	 * setColor method
+	 * wallStatus method
+	 * determines whether a cell vertex
+	 * has all its walls intact
+	 * @return true if all walls are present
+	 * 			false otherwise
+	 */
+	public boolean wallStatus() {
+		for (boolean wall : walls) {
+			if (wall)
+				continue;
+			else
+				return false;
+		}
+		return true;		
+	}
+	
+	/**
+	 * setColor method assigns color to vertex
 	 * white - unexplored
 	 * grey - discovered
      * black - explored
@@ -51,7 +73,7 @@ public class Vertex {
 	}
 	
 	/**
-	 * getColor method
+	 * getColor method retrieves vertex's color
 	 * @return color 
 	 */
 	public String getColor() {
@@ -59,7 +81,7 @@ public class Vertex {
 	}
 	
 	/**
-	 * setParent method
+	 * setParent method assigns this object a parent vertex
 	 * @param p parent vertex
 	 */
 	public void setParent(Vertex p) {
@@ -67,7 +89,7 @@ public class Vertex {
 	}
 	
 	/**
-	 * getParent method
+	 * getParent method retrieves parent vertex
 	 * @return parent vertex
 	 */
 	public Vertex getParent() {
@@ -75,7 +97,7 @@ public class Vertex {
 	}
 	
 	/**
-	 * getCoordX method
+	 * getCoordX method retrieves x coordinate of vertex
 	 * @return x coordinate of vertex
 	 */
 	public int getCoordX() {
@@ -83,19 +105,10 @@ public class Vertex {
 	}
 	
 	/**
-	 * getCoordY method
+	 * getCoordY method retrieves y coordinate of vertex
 	 * @return y coordinate of vertex
 	 */
 	public int getCoordY() {
 		return y_coord;
 	}
-	
-//	public void setCoordinates(int x, int y) {
-//		coordinates[0] = x;
-//		coordinates[1] = y;
-//	}
-//	
-//	public int [] getCoordinates() {
-//		return coordinates;
-//	}
 }
