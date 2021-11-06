@@ -6,31 +6,33 @@ import java.util.Deque;
 import java.util.Random;
 
 public class MazeModel {
-	private final int START_COORD_X = 0;
-	private final int START_COORD_Y = 0;
-	private int end_coord_x;
-	private int end_coord_y;
+	// define constant for x- and y-coordinate for starting cell
+	private final int START_COORD_X = 0; // also a boundary limit (lower end)
+	private final int START_COORD_Y = 0; // boundary limit (lower end)
+	private int end_coord_x; // x coordinate for finishing cell
+	private int end_coord_y; // y coordinate for finishing cell
 	private Grid theMaze;
 	
 	/**
-	 * Constructor
+	 * Constructor creates a virtual maze 
+	 * with cells whose four walls are present.
 	 * @param maze
 	 */
 	public MazeModel(Grid maze) {
 		theMaze = maze;
 		// the last cell in grid has
 		// x coordinate to be n - 1
-		end_coord_x = theMaze.getLimitOfGrid();
+		end_coord_x = theMaze.getLimitOfGrid(); // though this is the boundary limit n (upper end)
 		// also, y coordinate is n - 1
-		end_coord_y = theMaze.getLimitOfGrid();
+		end_coord_y = theMaze.getLimitOfGrid(); // similarly limit is n (upper end)
 	}
 	
 	/**
 	 * buildMaze method
 	 * creates accessible cells
-	 * i.e. connecting vertices to
-	 * form a path from starting and 
-	 * ending vertices. 
+	 * i.e. connecting cells to
+	 * each other without removing 
+	 * too many walls.
 	 */
 	public void buildMaze() {
 		// Create stack to keep track of cells as they are visited
@@ -45,56 +47,60 @@ public class MazeModel {
 		Random randSelect = new Random();
 		// Set seed to produce the same result every time
 		randSelect.setSeed(totalCells);
-		// A while loop
+		
+		// Continue to find cells and break down walls as long as 
+		// number of visited cells is fewer than total number of cells
 		while (numVisitedCells < totalCells) {
 			// find all neighbors of currentCell with all walls intact
-			int currLocX = currentCell.getCoordX();
-			int currLocY = currentCell.getCoordY();
+			int currLocX = currentCell.getCoordX(); // x coordinate of current cell
+			int currLocY = currentCell.getCoordY(); // y coordinate of current cell
+			// here is array list to keep all valid neighbors (with walls intact)
 			ArrayList<Vertex> neighbors = new ArrayList<Vertex>();
 			
+			// Keep debug print statement; comment it out when not needed
 			System.out.printf("\nNumber of Visited Cells: %d", numVisitedCells);
 			System.out.printf("\nCurrent Cell\nX-coordinate: %d\tY-coordinate: %d", currentCell.getCoordX(), currentCell.getCoordY());
-			// Determine if there is a neighbor
+			
+			// Determine if there are neighbors
 			if (currLocX - 1 >= 0) {
 				// current cell has a neighbor to the North
 				Vertex northernNeighbor = theMaze.getCell(currLocX-1, currLocY);
-				if (isNeighborVisited(northernNeighbor))
-					neighbors.add(northernNeighbor);
+				if (isNeighborNotVisited(northernNeighbor)) // is this neighbor visited?
+					neighbors.add(northernNeighbor); // true, add it to list 
 			}
 			if (currLocX + 1 < end_coord_x) {
 				// current cell has a neighbor to the South
 				Vertex southernNeighbor = theMaze.getCell(currLocX+1, currLocY);
-				if (isNeighborVisited(southernNeighbor))
+				if (isNeighborNotVisited(southernNeighbor))
 					neighbors.add(southernNeighbor);
 			}
 			if (currLocY + 1 < end_coord_y) {
 				// current cell has a neighbor to the East
 				Vertex easternNeighbor = theMaze.getCell(currLocX, currLocY+1);
-				if (isNeighborVisited(easternNeighbor))
+				if (isNeighborNotVisited(easternNeighbor))
 					neighbors.add(easternNeighbor);
 			}
 			if (currLocY - 1 >= 0) {
 				// current cell has a neighbor to the West
 				Vertex westernNeighbor = theMaze.getCell(currLocX, currLocY-1);
-				if (isNeighborVisited(westernNeighbor))
+				if (isNeighborNotVisited(westernNeighbor))
 					neighbors.add(westernNeighbor);
 			}
-			
 			
 			
 			// if one or more neighbors found, choose one at random
 			if (neighbors.size() > 0) {
 				// Randomly choose an index
 				int randNeighbor = randSelect.nextInt(neighbors.size());
-				// Pick a neighbor random with the above index
+				// Pick a random neighbor with the above index
 				Vertex chosenNeighbor = neighbors.get(randNeighbor);
 				
-				// Keep debug print statement; comment it out
+				// Keep debug print statement; comment it out when not needed
 				System.out.println("\nStart checking if neighbor is visited");
 				
 				// Verify if there is already a path connecting 
 				// currentCell and this chosenNeighbor
-				while (!isNeighborVisited(chosenNeighbor)) {
+				while (!isNeighborNotVisited(chosenNeighbor)) {
 					//neighbors.remove(randNeighbor); // remove neighbor
 					randNeighbor = randSelect.nextInt(neighbors.size());
 					chosenNeighbor = neighbors.get(randNeighbor);
@@ -112,11 +118,11 @@ public class MazeModel {
 					
 			}
 			else { // otherwise
-				// pop the most recent cell entry off the cellStack
-				if (cellStack.peekFirst() != null)
-					currentCell = cellStack.removeFirst(); // make it currentCell
+				// pop the most recent cell entry off stack
+				if (cellStack.peekFirst() != null) // check if stack is empty
+					currentCell = cellStack.removeFirst(); // true: make it the currentCell
 				else // empty stack (visited all cells)
-					numVisitedCells += 1;
+					numVisitedCells += 1; // help end while loop
 			}	
 		}
 	}
@@ -127,7 +133,7 @@ public class MazeModel {
 	 * @return true if all walls have not been broken down
 	 * 			false otherwise
 	 */
-	private boolean isNeighborVisited(Vertex neighbor) {
+	private boolean isNeighborNotVisited(Vertex neighbor) {
 		
 		return neighbor.wallStatus();
 	}
@@ -146,7 +152,7 @@ public class MazeModel {
 		int currCellPos = -1; // give initial value to avoid compilation error
 		
 		// Examine where the neighboring cell is
-		if (currXLoc - 1 == neighbor.getCoordX()) {
+		if (currXLoc - 1 == neighbor.getCoordX()) { 
 			neighborPos = 0; // North of current cell
 			currCellPos = 2; // then, current cell is South of neighboring cell
 		}
@@ -173,7 +179,7 @@ public class MazeModel {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Grid g = new Grid(5);
+		Grid g = new Grid(3);
 		MazeModel m = new MazeModel(g);
 		m.buildMaze();
 		System.out.println("\nEnd of Test");
