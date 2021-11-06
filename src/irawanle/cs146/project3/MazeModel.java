@@ -135,7 +135,7 @@ public class MazeModel {
 	 */
 	public ArrayList<Vertex> findEscapeRouteDeeply() {
 		ArrayList<Vertex> routeList = new ArrayList<Vertex>();
-		
+		theMaze.resetGrid(); // reset each cell's attributes to defaults
 		return routeList;
 	}
 	
