@@ -4,7 +4,7 @@ public class Vertex {
 	// boolean array indicating availability of walls surrounding vertex
 	private boolean[] walls = {true, true, true, true};
 	// vertex color
-	private String color;
+	private ColorCode color;
 	// parent vertex 
 	private Vertex parent;
 	// X coordinate
@@ -17,7 +17,7 @@ public class Vertex {
 	 */
 	public Vertex() {
 		parent = null;
-		color = "white";
+		color = ColorCode.WHITE;
 	}
 	
 	/**
@@ -27,7 +27,7 @@ public class Vertex {
 	 */
 	public Vertex(int x, int y) {
 		parent = null;
-		color = "white";
+		color = ColorCode.WHITE;
 		x_coord = x;
 		y_coord = y;
 	}
@@ -68,7 +68,7 @@ public class Vertex {
      * black - explored
      * @param c color of vertex
 	 */
-	public void setColor(String c){
+	public void setColor(ColorCode c){
 		color = c;
 	}
 	
@@ -76,7 +76,7 @@ public class Vertex {
 	 * getColor method retrieves vertex's color
 	 * @return color 
 	 */
-	public String getColor() {
+	public ColorCode getColor() {
 		return color;
 	}
 	
