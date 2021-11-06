@@ -128,6 +128,18 @@ public class MazeModel {
 	}
 	
 	/**
+	 * findEscapeRouteDeeply method
+	 * seeks a path from the starting cell
+	 * to the finishing cell in a depth-first manner.
+	 */
+	
+	/**
+	 * findEscapeRouteBroadly method
+	 * seeks a path from the starting cell 
+	 * to the finishing cell in a breadth-first manner.
+	 */
+	
+	/**
 	 * Determine if neighbor has all its walls intact
 	 * @param neighbor neighboring cell
 	 * @return true if all walls have not been broken down
