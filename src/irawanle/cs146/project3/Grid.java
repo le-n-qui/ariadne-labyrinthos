@@ -29,6 +29,23 @@ public class Grid {
 	}
 	
 	/**
+	 * resetGrid method
+	 * ensures that each cell (vertex)
+	 * has default value of null for 
+	 * parent attribute and value of WHITE 
+	 * for color attribute
+	 * 
+	 */
+	public void resetGrid() {
+		for (int row = 0; row < size; row++) {
+			for (int col = 0; col < size; col++) {
+				mazeGrid[row][col].setColor(ColorCode.WHITE);
+				mazeGrid[row][col].setParent(null);
+			}
+		}
+	}
+	
+	/**
 	 * numOfCells method retrieves the total number of cells (vertices)
 	 * @return total number of cells
 	 */
