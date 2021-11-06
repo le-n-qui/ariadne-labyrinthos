@@ -131,7 +131,7 @@ public class MazeModel {
 	 * findEscapeRouteDeeply method
 	 * seeks a path from the starting cell
 	 * to the finishing cell in a depth-first manner.
-	 * @return a list of cells the form
+	 * @return a list of cells that forms a path
 	 */
 	public ArrayList<Vertex> findEscapeRouteDeeply() {
 		ArrayList<Vertex> routeList = new ArrayList<Vertex>();
@@ -143,7 +143,13 @@ public class MazeModel {
 	 * findEscapeRouteBroadly method
 	 * seeks a path from the starting cell 
 	 * to the finishing cell in a breadth-first manner.
+	 * @return a list of cells that forms a path
 	 */
+	public ArrayList<Vertex> findEscapeRouteBroadly() {
+		ArrayList<Vertex> routeList = new ArrayList<Vertex>();
+		
+		return routeList;
+	}
 	
 	/**
 	 * Determine if neighbor has all its walls intact
