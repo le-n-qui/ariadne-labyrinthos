@@ -62,7 +62,7 @@ public class MazeModel {
 			System.out.printf("\nCurrent Cell\nX-coordinate: %d\tY-coordinate: %d", currentCell.getCoordX(), currentCell.getCoordY());
 			
 			// Determine if there are neighbors
-			if (currLocX - 1 >= 0) {
+			if (currLocX - 1 >= START_COORD_X) {
 				// current cell has a neighbor to the North
 				Vertex northernNeighbor = theMaze.getCell(currLocX-1, currLocY);
 				if (isNeighborNotVisited(northernNeighbor)) // is this neighbor visited?
@@ -80,7 +80,7 @@ public class MazeModel {
 				if (isNeighborNotVisited(easternNeighbor))
 					neighbors.add(easternNeighbor);
 			}
-			if (currLocY - 1 >= 0) {
+			if (currLocY - 1 >= START_COORD_Y) {
 				// current cell has a neighbor to the West
 				Vertex westernNeighbor = theMaze.getCell(currLocX, currLocY-1);
 				if (isNeighborNotVisited(westernNeighbor))
