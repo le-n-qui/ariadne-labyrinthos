@@ -132,32 +132,46 @@ public class MazeModel {
 		return neighbor.wallStatus();
 	}
 	
+	/**
+	 * This removeWall helper method will determine
+	 * where the neighboring cell is, relative to
+	 * the current cell.
+	 * @param currCell
+	 * @param neighbor
+	 */
 	private void removeWall(Vertex currCell, Vertex neighbor) {
-		int currXLoc = currCell.getCoordX();
-		int currYLoc = currCell.getCoordY();
+		int currXLoc = currCell.getCoordX(); // x coordinate of current cell
+		int currYLoc = currCell.getCoordY(); // y coordinate of current cell
 		int neighborPos = -1; // cell at invalid position
-		int currCellPos = -1;
+		int currCellPos = -1; // give initial value to avoid compilation error
+		
+		// Examine where the neighboring cell is
 		if (currXLoc - 1 == neighbor.getCoordX()) {
 			neighborPos = 0; // North of current cell
-			currCellPos = 2; // South of neighbor
+			currCellPos = 2; // then, current cell is South of neighboring cell
 		}
 		if (currXLoc + 1 == neighbor.getCoordX()) {
 			neighborPos = 2; // South of current cell
-			currCellPos = 0; // North of neighbor
+			currCellPos = 0; // current cell is North of neighboring cell
 		}
 		if (currYLoc + 1 == neighbor.getCoordY()) {
-			neighborPos = 1; // East
-			currCellPos = 3; // West
+			neighborPos = 1; // East of current cell
+			currCellPos = 3; // current cell is West of neighboring cell
 		}
 		if (currYLoc - 1 == neighbor.getCoordY()) {
-			neighborPos = 3; // West
-			currCellPos = 1; // East
+			neighborPos = 3; // West of current cell
+			currCellPos = 1; // current cell is East of neighboring cell
 		}
-		// Remove walls on both instances of vertices (cells)
+		// Remove walls and reflect this change in both cells
 		currCell.neighborPresentAt(neighborPos);
 		neighbor.neighborPresentAt(currCellPos);
 	}
 	
+	/**
+	 * This main method is used to test whether 
+	 * buildMaze method does what it is supposed to.
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		Grid g = new Grid(5);
 		MazeModel m = new MazeModel(g);
