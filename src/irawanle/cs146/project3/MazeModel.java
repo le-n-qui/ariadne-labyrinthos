@@ -131,7 +131,13 @@ public class MazeModel {
 	 * findEscapeRouteDeeply method
 	 * seeks a path from the starting cell
 	 * to the finishing cell in a depth-first manner.
+	 * @return a list of cells the form
 	 */
+	public ArrayList<Vertex> findEscapeRouteDeeply() {
+		ArrayList<Vertex> routeList = new ArrayList<Vertex>();
+		
+		return routeList;
+	}
 	
 	/**
 	 * findEscapeRouteBroadly method
