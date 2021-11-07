@@ -1,5 +1,10 @@
 package irawanle.cs146.project3;
 
+/**
+ * The Grid class creates a virtual 2-D array 
+ * structure that a maze can be built on later.
+ * @author Andy Qui Le & Ashley Irawan
+ */
 public class Grid {
 	// 2-D representation of a grid containing vertices
 	private Vertex [][] mazeGrid;

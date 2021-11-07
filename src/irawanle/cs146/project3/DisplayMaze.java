@@ -2,12 +2,19 @@ package irawanle.cs146.project3;
 
 import java.util.ArrayList;
 
+/**
+ * The DisplayMaze class creates an ASCII 
+ * view of the maze.
+ * @author Ashley Irawan & Andy Qui Le
+ */
 public class DisplayMaze {
+	// 2-D view of the maze
 	String [][] display;
+	// size of the maze 
 	int size;
 
 
-	DisplayMaze(Grid theMaze){
+	public DisplayMaze(Grid theMaze){
 		size = ((theMaze.getLimitOfGrid()+1)*2)-1;
 		display = new String[size][size];
 		for (int x = 0; x < size; x++) {

@@ -7,6 +7,11 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
 
+/**
+ * The MazeModel class uses Grid object
+ * to build a maze and find a path solution.
+ * @author Andy Qui Le & Ashley Irawan
+ */
 public class MazeModel {
 	// define constant for x- and y-coordinate for starting cell
 	private final int START_COORD_X = 0; // also a boundary limit (lower end)
@@ -148,6 +153,7 @@ public class MazeModel {
 	public ArrayList<Vertex> findEscapeRouteDeeply() {
 		// a list containing the final solution
 		ArrayList<Vertex> routeList = new ArrayList<Vertex>();
+		// a list containing all explored cells
 		ArrayList<Vertex> exploreList = new ArrayList<Vertex>();
 		// stack storing cells that have been visited
 		Deque<Vertex> cellStack = new ArrayDeque<Vertex>();
@@ -308,11 +314,13 @@ public class MazeModel {
 			routeList.add(curr);
 			x = curr.getCoordX();
 			y = curr.getCoordY();
+			
 			ArrayList<Vertex> neighbors = new ArrayList<Vertex>();
-				if (curr.getWallStatus()[0] == false) neighbors.add(theMaze.getCell(x-1, y)); 
-				if (curr.getWallStatus()[1] == false) neighbors.add(theMaze.getCell(x, y+1));
-				if (curr.getWallStatus()[2] == false) neighbors.add(theMaze.getCell(x+1, y));
-				if (curr.getWallStatus()[3] == false) neighbors.add(theMaze.getCell(x, y-1));
+			if (curr.getWallStatus()[0] == false) neighbors.add(theMaze.getCell(x-1, y)); 
+			if (curr.getWallStatus()[1] == false) neighbors.add(theMaze.getCell(x, y+1));
+			if (curr.getWallStatus()[2] == false) neighbors.add(theMaze.getCell(x+1, y));
+			if (curr.getWallStatus()[3] == false) neighbors.add(theMaze.getCell(x, y-1));
+			
 			for (Vertex v:neighbors) {
 				if (v.getColor() == ColorCode.WHITE) {
 					v.setColor(ColorCode.GREY);
@@ -381,7 +389,7 @@ public class MazeModel {
 	
 	/**
 	 * This main method is used to test whether 
-	 * buildMaze method does what it is supposed to.
+	 * various methods do what they are supposed to do.
 	 * @param args
 	 */
 	public static void main(String[] args) {

@@ -1,5 +1,10 @@
 package irawanle.cs146.project3;
 
+/**
+ * The Vertex class makes individual
+ * vertices to be placed into a grid.
+ * @author Andy Qui Le & Ashley Irawan
+ */
 public class Vertex {
 	// boolean array indicating availability of walls surrounding vertex
 	private boolean[] walls = {true, true, true, true};
@@ -50,7 +55,7 @@ public class Vertex {
 	
 	/**
 	 * wallStatus method
-	 * determines whether a cell vertex
+	 * determines whether a vertex
 	 * has all its walls intact
 	 * @return true if all walls are present
 	 * 			false otherwise
@@ -66,7 +71,10 @@ public class Vertex {
 	}
 	
 	/**
-	 * getWallStatus method
+	 * getWallStatus method retrieves 
+	 * the boolean array that tells the 
+	 * statuses of the four walls at each vertex
+	 * @return the statuses of the walls
 	 */
 	public boolean[] getWallStatus() {
 		return walls;
@@ -84,7 +92,7 @@ public class Vertex {
 	}
 	
 	/**
-	 * getColor method retrieves vertex's color
+	 * getColor method retrieves a vertex's color
 	 * @return color 
 	 */
 	public ColorCode getColor() {
@@ -124,14 +132,14 @@ public class Vertex {
 	}
 	
 	/**
-	 * resetDistance method
+	 * resetDistance method sets distance to zero
 	 */
 	public void resetDistance() {
 		distance = 0;
 	}
 	
 	/**
-	 * getDistance method
+	 * getDistance method retrieves distance accumulated at vertex
 	 * @return distance between source vertex and this vertex
 	 */
 	public int getDistance() {
@@ -139,7 +147,7 @@ public class Vertex {
 	}
 	
 	/**
-	 * updateDistance method
+	 * updateDistance method sets a new distance amount to current vertex
 	 * @param amount distance between current vertex's parent and source
 	 */
 	public void updateDistance(int amount) {
