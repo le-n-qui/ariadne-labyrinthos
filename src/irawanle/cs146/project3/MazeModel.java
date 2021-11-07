@@ -372,6 +372,15 @@ public class MazeModel {
 		System.out.println("\nAnswer to Maze:");
 		for (Vertex v : solution)
 			System.out.print("(" + v.getCoordX() + "," + v.getCoordY() + ") ");
+		ArrayList<Vertex> shortestPath = m.findEscapeRouteBroadly();
+		System.out.println("\nPath: ");
+		for (Vertex i: shortestPath) System.out.print("(" + i.getCoordX() + "," + i.getCoordY() + ") ");
+		System.out.print("\n");
+		System.out.print("Length of Path: " + shortestPath.get(shortestPath.size()-1).getDistance() + "\n");
+		System.out.println("\nEnd of Test");
+
+
+
 		System.out.println("\nEnd of Test");
 	}
 }

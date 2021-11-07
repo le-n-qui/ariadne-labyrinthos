@@ -24,14 +24,14 @@ public class DisplayMaze {
 			}
 	}
 	
-	public static void main(String [] args) {
-		Grid g = new Grid(3);
-		DisplayMaze m = new DisplayMaze(g);
-		for (int i = 0; i < m.size; i++) {
-			for (int j = 0; j < m.size; j++) {
-				System.out.print(m.display[i][j]);
-			}
-			System.out.print("\n");
-		}
-	}
+//	public static void main(String [] args) {
+//		Grid g = new Grid(3);
+//		DisplayMaze m = new DisplayMaze(g);
+//		for (int i = 0; i < m.size; i++) {
+//			for (int j = 0; j < m.size; j++) {
+//				System.out.print(m.display[i][j]);
+//			}
+//			System.out.print("\n");
+//		}
+//	}
 }
