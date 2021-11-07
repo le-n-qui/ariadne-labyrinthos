@@ -41,6 +41,7 @@ public class Grid {
 			for (int col = 0; col < size; col++) {
 				mazeGrid[row][col].setColor(ColorCode.WHITE);
 				mazeGrid[row][col].setParent(null);
+				mazeGrid[row][col].resetDistance();
 			}
 		}
 	}
