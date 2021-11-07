@@ -20,6 +20,7 @@ public class Vertex {
 	public Vertex() {
 		parent = null;
 		color = ColorCode.WHITE;
+		distance = 0;
 	}
 	
 	/**
@@ -32,6 +33,7 @@ public class Vertex {
 		color = ColorCode.WHITE;
 		x_coord = x;
 		y_coord = y;
+		distance = 0;
 	}
 	
 	/**
@@ -119,6 +121,21 @@ public class Vertex {
 	 */
 	public int getCoordY() {
 		return y_coord;
+	}
+	
+	/**
+	 * resetDistance method
+	 */
+	public void resetDistance() {
+		distance = 0;
+	}
+	
+	/**
+	 * getDistance method
+	 * @return distance between source vertex and this vertex
+	 */
+	public int getDistance() {
+		return distance;
 	}
 	
 	/**
