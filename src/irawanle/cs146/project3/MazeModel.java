@@ -59,7 +59,7 @@ public class MazeModel {
 			
 			// Keep debug print statement; comment it out when not needed
 			System.out.printf("\nNumber of Visited Cells: %d", numVisitedCells);
-			System.out.printf("\nCurrent Cell\nX-coordinate: %d\tY-coordinate: %d", currentCell.getCoordX(), currentCell.getCoordY());
+			System.out.printf("\nCurrent Cell\tX-coordinate: %d\tY-coordinate: %d", currentCell.getCoordX(), currentCell.getCoordY());
 			
 			// Determine if there are neighbors
 			if (currLocX - 1 >= START_COORD_X) {
@@ -134,8 +134,138 @@ public class MazeModel {
 	 * @return a list of cells that forms a path
 	 */
 	public ArrayList<Vertex> findEscapeRouteDeeply() {
+		// a list containing the final solution
 		ArrayList<Vertex> routeList = new ArrayList<Vertex>();
-		theMaze.resetGrid(); // reset each cell's attributes to defaults
+		
+		// stack storing cells that have been visited
+		Deque<Vertex> cellStack = new ArrayDeque<Vertex>();
+		// Random generator
+		Random randSelect = new Random();
+		randSelect.setSeed(theMaze.numOfCells());
+		// reset each cell's attributes to defaults
+		theMaze.resetGrid(); 
+		// currentCell is where we start the path
+		Vertex currentCell = theMaze.getCell(START_COORD_X, START_COORD_Y);
+		
+		// current cell x coordinate
+		int currCoordX = currentCell.getCoordX();
+		// current cell y coordinate 
+		int currCoordY = currentCell.getCoordY();
+		// a boolean flag that indicates we get to the finishing cell
+		boolean theEnd = false;
+		
+		// Keep debug print statement, comment it out when needed
+		System.out.println(); // newline
+		System.out.println("\nTracing the maze");
+		
+		// Visit neighbors of current cell
+		while (!theEnd && (currCoordX != end_coord_x - 1 || currCoordY != end_coord_y - 1)) {
+			
+			// get wall statuses for current cell
+			boolean[] cellWalls = currentCell.getWallStatus();
+			// a list containing accessible neighbors
+			ArrayList<Vertex> openNeighbors = new ArrayList<Vertex>();
+			
+			// Keep debug print statement, comment it out when needed
+			System.out.println(); // newline
+			System.out.printf("\nCurrent Cell\tX-coordinate: %d\tY-coordinate: %d", currCoordX, currCoordY);
+			
+			// Find accessible neighbors of current cell
+			for (int direction = 0; direction < 4; direction++) { // 4 directions
+				if (!cellWalls[direction]) { // if the wall is not present at this direction
+					switch (direction) {
+						case 0: 
+							Vertex northNeighbor = theMaze.getCell(currCoordX-1, currCoordY);
+							if (northNeighbor.getColor() == ColorCode.WHITE)
+								openNeighbors.add(northNeighbor);
+							break;
+						case 1: 
+							Vertex eastNeighbor = theMaze.getCell(currCoordX, currCoordY+1);
+							if (eastNeighbor.getColor() == ColorCode.WHITE)
+								openNeighbors.add(eastNeighbor);
+							break;
+						case 2: 
+							Vertex southNeighbor = theMaze.getCell(currCoordX+1, currCoordY);
+							if (southNeighbor.getColor() == ColorCode.WHITE)
+								openNeighbors.add(southNeighbor);
+							break;
+						case 3: 
+							Vertex westNeighbor = theMaze.getCell(currCoordX, currCoordY-1);
+							if (westNeighbor.getColor() == ColorCode.WHITE)
+								openNeighbors.add(westNeighbor);
+							break;
+						default: 
+							break;
+					}
+				}
+			}
+			
+			// look through neighbors of current cell
+			if (openNeighbors.size() > 0) { // current cell has at least 1 neighbor
+				// Generate a random index
+				int randIndex = randSelect.nextInt(openNeighbors.size());
+				// Keep debug print statement, comment it out when needed
+				System.out.println("\nNeighbors List Size:" + openNeighbors.size() + "\tRandom Index: " + randIndex);
+				// Retrieve neighbor at this random index
+				Vertex chosenNeighbor = openNeighbors.get(randIndex);
+				// Keep debug print statement, comment it out when needed
+				System.out.printf("Neighbor Cell\tX-coordinate: %d\tY-coordinate: %d", chosenNeighbor.getCoordX(), chosenNeighbor.getCoordY());
+				// Explore current cell; change cell's color to grey
+				currentCell.setColor(ColorCode.GREY);
+				// Keep debug print statement, comment it out when needed
+				System.out.println("\nPush current cell to Stack");
+				// Push current cell into stack
+				cellStack.addFirst(currentCell);
+				// Keep debug print statement, comment it out when needed
+				System.out.println("Done pushing");
+				// Set current cell as parent to chosen neighbor
+				chosenNeighbor.setParent(currentCell);
+				// Update distance from chosen neighbor to starting cell
+				chosenNeighbor.updateDistance(currentCell.getDistance());
+				// Keep debug print statement, comment it out when needed
+				System.out.println("Current path length: " + chosenNeighbor.getDistance());
+				// current cell is now chosen neighbor after assignment
+				currentCell = chosenNeighbor;
+				// Update current x coordinate
+				currCoordX = currentCell.getCoordX();
+				// Update current y coordinate
+				currCoordY = currentCell.getCoordY();
+				// if we are at the finishing cell
+				if (currCoordX == end_coord_x && currCoordY == end_coord_y)
+					// set our flag to true
+					theEnd = true;
+				
+			} else { // if current cell's list of neighbors is zero
+				// Fully visited current cell; change cell's color to black
+				currentCell.setColor(ColorCode.BLACK); 
+				// verify stack is not empty
+				if (cellStack.peekFirst() != null) {
+					// Keep debug print statement, comment it out when needed
+					System.out.println("\nPop the stack");
+					// Pop the stack and assign what's at top of stack to be current cell
+					currentCell = cellStack.removeFirst();
+					currCoordX = currentCell.getCoordX();
+					currCoordY = currentCell.getCoordY();
+					// Keep debug print statement, comment it out when needed
+					System.out.printf("Current Cell\nX-coordinate: %d\tY-coordinate: %d", currCoordX, currCoordY);
+					System.out.println("\nDone popping");
+				}
+				else {
+					theEnd = true;
+				}
+			}
+		}
+		
+		// Keep debug print statement; comment it out when needed
+		System.out.println("\nFinish while loop");
+		// Move cells from bottom of the stack to solution route list
+		while (cellStack.peekFirst() != null)
+			routeList.add(cellStack.removeLast());
+		System.out.printf("\nCurrent Cell\nX-coordinate: %d\tY-coordinate: %d", currentCell.getCoordX(), currentCell.getCoordY());
+		// note: add the finishing cell (we stopped here)
+		routeList.add(currentCell); 
+		System.out.println("\nShortest path length: " + routeList.size());
+		
 		return routeList;
 	}
 	
@@ -203,9 +333,13 @@ public class MazeModel {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Grid g = new Grid(3);
+		Grid g = new Grid(5);
 		MazeModel m = new MazeModel(g);
 		m.buildMaze();
+		ArrayList<Vertex> solution = m.findEscapeRouteDeeply();
+		System.out.println("\nAnswer to Maze:");
+		for (Vertex v : solution)
+			System.out.print("(" + v.getCoordX() + "," + v.getCoordY() + ") ");
 		System.out.println("\nEnd of Test");
 	}
 }
