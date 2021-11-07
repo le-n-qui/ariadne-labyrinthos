@@ -31,6 +31,10 @@ public class MazeModel {
 		end_coord_y = theMaze.getLimitOfGrid(); // similarly limit is n (upper end)
 	}
 	
+	/**
+	 * getGrid method retrieves the internal grid object.
+	 * @return the maze grid
+	 */
 	public Grid getGrid() {
 		return theMaze;
 	}
