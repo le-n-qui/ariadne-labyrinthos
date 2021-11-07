@@ -1,11 +1,11 @@
 package irawanle.cs146.project3;
 
-public class displayMaze {
+public class DisplayMaze {
 	String [][] display;
 	int size;
 
 
-	displayMaze(Grid theMaze){
+	DisplayMaze(Grid theMaze){
 		size = ((theMaze.getLimitOfGrid()+1)*2)-1;
 		display = new String[size][size];
 		for (int x = 0; x < size; x++) {
@@ -26,7 +26,7 @@ public class displayMaze {
 	
 	public static void main(String [] args) {
 		Grid g = new Grid(3);
-		displayMaze m = new displayMaze(g);
+		DisplayMaze m = new DisplayMaze(g);
 		for (int i = 0; i < m.size; i++) {
 			for (int j = 0; j < m.size; j++) {
 				System.out.print(m.display[i][j]);
