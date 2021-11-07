@@ -11,6 +11,8 @@ public class Vertex {
     private int x_coord;
     // Y coordinate
     private int y_coord;
+    // shortest distance from a source vertex
+    private int distance;
 	
 	/**
 	 * No-arg Constructor
@@ -117,5 +119,13 @@ public class Vertex {
 	 */
 	public int getCoordY() {
 		return y_coord;
+	}
+	
+	/**
+	 * updateDistance method
+	 * @param amount distance between current vertex's parent and source
+	 */
+	public void updateDistance(int amount) {
+		distance = amount + 1; // 1: accounting for current vertex
 	}
 }
