@@ -3,6 +3,8 @@ package irawanle.cs146.project3;
 import java.util.ArrayList;
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Random;
 
 public class MazeModel {
@@ -277,8 +279,38 @@ public class MazeModel {
 	 */
 	public ArrayList<Vertex> findEscapeRouteBroadly() {
 		ArrayList<Vertex> routeList = new ArrayList<Vertex>();
+		theMaze.resetGrid(); // reset each cell's attributes to defaults
+		Queue<Vertex> queue = new LinkedList<Vertex>();
+		int x = START_COORD_X;
+		int y = START_COORD_Y;
+		Vertex curr = theMaze.getCell(x, y);
+		queue.add(curr);
+		 
+		while (queue.size() != 0) {
+			curr = queue.poll();
+			routeList.add(curr);
+			x = curr.getCoordX();
+			y = curr.getCoordY();
+			ArrayList<Vertex> neighbors = new ArrayList<Vertex>();
+				if (curr.getWallStatus()[0] == false) neighbors.add(theMaze.getCell(x-1, y)); 
+				if (curr.getWallStatus()[1] == false) neighbors.add(theMaze.getCell(x, y+1));
+				if (curr.getWallStatus()[2] == false) neighbors.add(theMaze.getCell(x+1, y));
+				if (curr.getWallStatus()[3] == false) neighbors.add(theMaze.getCell(x, y-1));
+			for (Vertex v:neighbors) {
+				if (v.getColor() == ColorCode.WHITE) {
+					v.setColor(ColorCode.GREY);
+					v.updateDistance(curr.getDistance());
+					v.setParent(curr);
+					queue.add(v);
+				}
+			}
+			curr.setColor(ColorCode.BLACK);
+			if (curr.getCoordX() == theMaze.getLimitOfGrid()-1 && curr.getCoordY() == theMaze.getLimitOfGrid()-1)
+				return routeList;
+		}
 		
 		return routeList;
+		
 	}
 	
 	/**
