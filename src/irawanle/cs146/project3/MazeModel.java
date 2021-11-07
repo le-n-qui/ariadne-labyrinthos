@@ -14,6 +14,8 @@ public class MazeModel {
 	private int end_coord_x; // x coordinate for finishing cell
 	private int end_coord_y; // y coordinate for finishing cell
 	private Grid theMaze;
+	private ArrayList<Vertex> DFSSolution;
+	private ArrayList<Vertex> BFSSolution;
 	
 	/**
 	 * Constructor creates a virtual maze 
@@ -27,6 +29,10 @@ public class MazeModel {
 		end_coord_x = theMaze.getLimitOfGrid(); // though this is the boundary limit n (upper end)
 		// also, y coordinate is n - 1
 		end_coord_y = theMaze.getLimitOfGrid(); // similarly limit is n (upper end)
+	}
+	
+	public Grid getGrid() {
+		return theMaze;
 	}
 	
 	/**
@@ -60,8 +66,8 @@ public class MazeModel {
 			ArrayList<Vertex> neighbors = new ArrayList<Vertex>();
 			
 			// Keep debug print statement; comment it out when not needed
-			System.out.printf("\nNumber of Visited Cells: %d", numVisitedCells);
-			System.out.printf("\nCurrent Cell\tX-coordinate: %d\tY-coordinate: %d", currentCell.getCoordX(), currentCell.getCoordY());
+//			System.out.printf("\nNumber of Visited Cells: %d", numVisitedCells);
+//			System.out.printf("\nCurrent Cell\tX-coordinate: %d\tY-coordinate: %d", currentCell.getCoordX(), currentCell.getCoordY());
 			
 			// Determine if there are neighbors
 			if (currLocX - 1 >= START_COORD_X) {
@@ -98,7 +104,7 @@ public class MazeModel {
 				Vertex chosenNeighbor = neighbors.get(randNeighbor);
 				
 				// Keep debug print statement; comment it out when not needed
-				System.out.println("\nStart checking if neighbor is visited");
+				//System.out.println("\nStart checking if neighbor is visited");
 				
 				// Verify if there is already a path connecting 
 				// currentCell and this chosenNeighbor
@@ -107,7 +113,7 @@ public class MazeModel {
 					randNeighbor = randSelect.nextInt(neighbors.size());
 					chosenNeighbor = neighbors.get(randNeighbor);
 				}
-				System.out.println("Done checking");
+				//System.out.println("Done checking");
 				
 				// remove wall between this selected neighbor and currentCell
 				removeWall(currentCell, chosenNeighbor);
@@ -138,7 +144,7 @@ public class MazeModel {
 	public ArrayList<Vertex> findEscapeRouteDeeply() {
 		// a list containing the final solution
 		ArrayList<Vertex> routeList = new ArrayList<Vertex>();
-		
+		ArrayList<Vertex> exploreList = new ArrayList<Vertex>();
 		// stack storing cells that have been visited
 		Deque<Vertex> cellStack = new ArrayDeque<Vertex>();
 		// Random generator
@@ -156,9 +162,9 @@ public class MazeModel {
 		// a boolean flag that indicates we get to the finishing cell
 		boolean theEnd = false;
 		
-		// Keep debug print statement, comment it out when needed
-		System.out.println(); // newline
-		System.out.println("\nTracing the maze");
+//		// Keep debug print statement, comment it out when needed
+//		System.out.println(); // newline
+//		System.out.println("\nTracing the maze");
 		
 		// Visit neighbors of current cell
 		while (!theEnd && (currCoordX != end_coord_x - 1 || currCoordY != end_coord_y - 1)) {
@@ -169,9 +175,9 @@ public class MazeModel {
 			ArrayList<Vertex> openNeighbors = new ArrayList<Vertex>();
 			
 			// Keep debug print statement, comment it out when needed
-			System.out.println(); // newline
-			System.out.printf("\nCurrent Cell\tX-coordinate: %d\tY-coordinate: %d", currCoordX, currCoordY);
-			
+//			System.out.println(); // newline
+//			System.out.printf("\nCurrent Cell\tX-coordinate: %d\tY-coordinate: %d", currCoordX, currCoordY);
+//			
 			// Find accessible neighbors of current cell
 			for (int direction = 0; direction < 4; direction++) { // 4 directions
 				if (!cellWalls[direction]) { // if the wall is not present at this direction
@@ -207,25 +213,26 @@ public class MazeModel {
 				// Generate a random index
 				int randIndex = randSelect.nextInt(openNeighbors.size());
 				// Keep debug print statement, comment it out when needed
-				System.out.println("\nNeighbors List Size:" + openNeighbors.size() + "\tRandom Index: " + randIndex);
+			//	System.out.println("\nNeighbors List Size:" + openNeighbors.size() + "\tRandom Index: " + randIndex);
 				// Retrieve neighbor at this random index
 				Vertex chosenNeighbor = openNeighbors.get(randIndex);
 				// Keep debug print statement, comment it out when needed
-				System.out.printf("Neighbor Cell\tX-coordinate: %d\tY-coordinate: %d", chosenNeighbor.getCoordX(), chosenNeighbor.getCoordY());
+			//	System.out.printf("Neighbor Cell\tX-coordinate: %d\tY-coordinate: %d", chosenNeighbor.getCoordX(), chosenNeighbor.getCoordY());
 				// Explore current cell; change cell's color to grey
 				currentCell.setColor(ColorCode.GREY);
 				// Keep debug print statement, comment it out when needed
-				System.out.println("\nPush current cell to Stack");
+			//	System.out.println("\nPush current cell to Stack");
 				// Push current cell into stack
 				cellStack.addFirst(currentCell);
+				exploreList.add(currentCell);
 				// Keep debug print statement, comment it out when needed
-				System.out.println("Done pushing");
+			//	System.out.println("Done pushing");
 				// Set current cell as parent to chosen neighbor
 				chosenNeighbor.setParent(currentCell);
 				// Update distance from chosen neighbor to starting cell
 				chosenNeighbor.updateDistance(currentCell.getDistance());
 				// Keep debug print statement, comment it out when needed
-				System.out.println("Current path length: " + chosenNeighbor.getDistance());
+				//System.out.println("Current path length: " + chosenNeighbor.getDistance());
 				// current cell is now chosen neighbor after assignment
 				currentCell = chosenNeighbor;
 				// Update current x coordinate
@@ -239,18 +246,19 @@ public class MazeModel {
 				
 			} else { // if current cell's list of neighbors is zero
 				// Fully visited current cell; change cell's color to black
-				currentCell.setColor(ColorCode.BLACK); 
+				currentCell.setColor(ColorCode.BLACK);
+				exploreList.add(currentCell);
 				// verify stack is not empty
 				if (cellStack.peekFirst() != null) {
 					// Keep debug print statement, comment it out when needed
-					System.out.println("\nPop the stack");
+					//System.out.println("\nPop the stack");
 					// Pop the stack and assign what's at top of stack to be current cell
 					currentCell = cellStack.removeFirst();
 					currCoordX = currentCell.getCoordX();
 					currCoordY = currentCell.getCoordY();
 					// Keep debug print statement, comment it out when needed
-					System.out.printf("Current Cell\nX-coordinate: %d\tY-coordinate: %d", currCoordX, currCoordY);
-					System.out.println("\nDone popping");
+					//System.out.printf("Current Cell\nX-coordinate: %d\tY-coordinate: %d", currCoordX, currCoordY);
+					//System.out.println("\nDone popping");
 				}
 				else {
 					theEnd = true;
@@ -258,17 +266,20 @@ public class MazeModel {
 			}
 		}
 		
+		
 		// Keep debug print statement; comment it out when needed
-		System.out.println("\nFinish while loop");
+	//	System.out.println("\nFinish while loop");
 		// Move cells from bottom of the stack to solution route list
 		while (cellStack.peekFirst() != null)
 			routeList.add(cellStack.removeLast());
-		System.out.printf("\nCurrent Cell\nX-coordinate: %d\tY-coordinate: %d", currentCell.getCoordX(), currentCell.getCoordY());
+		//System.out.printf("\nCurrent Cell\nX-coordinate: %d\tY-coordinate: %d", currentCell.getCoordX(), currentCell.getCoordY());
 		// note: add the finishing cell (we stopped here)
 		routeList.add(currentCell); 
+		exploreList.add(currentCell);
 		System.out.println("\nShortest path length: " + routeList.size());
 		
-		return routeList;
+		DFSSolution = routeList;
+		return exploreList;
 	}
 	
 	/**
@@ -279,12 +290,14 @@ public class MazeModel {
 	 */
 	public ArrayList<Vertex> findEscapeRouteBroadly() {
 		ArrayList<Vertex> routeList = new ArrayList<Vertex>();
+		ArrayList<Vertex> exploreList = new ArrayList<Vertex>();
 		theMaze.resetGrid(); // reset each cell's attributes to defaults
 		Queue<Vertex> queue = new LinkedList<Vertex>();
 		int x = START_COORD_X;
 		int y = START_COORD_Y;
 		Vertex curr = theMaze.getCell(x, y);
 		queue.add(curr);
+		exploreList.add(curr);
 		 
 		while (queue.size() != 0) {
 			curr = queue.poll();
@@ -302,16 +315,19 @@ public class MazeModel {
 					v.updateDistance(curr.getDistance());
 					v.setParent(curr);
 					queue.add(v);
+					exploreList.add(v);
 				}
 			}
 			curr.setColor(ColorCode.BLACK);
-			if (curr.getCoordX() == theMaze.getLimitOfGrid()-1 && curr.getCoordY() == theMaze.getLimitOfGrid()-1)
-				return routeList;
+			if (curr.getCoordX() == theMaze.getLimitOfGrid()-1 && curr.getCoordY() == theMaze.getLimitOfGrid()-1) {
+				BFSSolution = routeList;
+				break;
+				}
+			}
+		return exploreList;
 		}
 		
-		return routeList;
-		
-	}
+
 	
 	/**
 	 * Determine if neighbor has all its walls intact
@@ -368,18 +384,69 @@ public class MazeModel {
 		Grid g = new Grid(5);
 		MazeModel m = new MazeModel(g);
 		m.buildMaze();
+		
+		DisplayMaze display = new DisplayMaze(m.getGrid());
+		String[][] view = display.getDisplay();
+		for (int i = 0; i < 11; i++) {
+			for (int j = 0; j < 11; j++) {
+				System.out.print(view[i][j]);
+			}
+			System.out.print("\n");
+		}
+		
 		ArrayList<Vertex> solution = m.findEscapeRouteDeeply();
 		System.out.println("\nAnswer to Maze:");
-		for (Vertex v : solution)
+		for (Vertex v : m.DFSSolution)
 			System.out.print("(" + v.getCoordX() + "," + v.getCoordY() + ") ");
+		System.out.println("\n");
+		
+		DisplayMaze display2 = new DisplayMaze(m.getGrid());
+		display2.showPath(m.DFSSolution);
+		view = display2.getDisplay();
+		for (int i = 0; i < 11; i++) {
+			for (int j = 0; j < 11; j++) {
+				System.out.print(view[i][j]);
+			}
+			System.out.print("\n");
+		}
+		System.out.print("\n");
+
+		DisplayMaze display3 = new DisplayMaze(m.getGrid());
+		display3.showAllPaths(solution);
+		view = display3.getDisplay();
+		for (int i = 0; i < 11; i++) {
+			for (int j = 0; j < 11; j++) {
+				System.out.print(view[i][j]);
+			}
+			System.out.print("\n");
+		}
+		
 		ArrayList<Vertex> shortestPath = m.findEscapeRouteBroadly();
 		System.out.println("\nPath: ");
-		for (Vertex i: shortestPath) System.out.print("(" + i.getCoordX() + "," + i.getCoordY() + ") ");
+		for (Vertex i: m.BFSSolution) System.out.print("(" + i.getCoordX() + "," + i.getCoordY() + ") ");
 		System.out.print("\n");
-		System.out.print("Length of Path: " + shortestPath.get(shortestPath.size()-1).getDistance() + "\n");
-		System.out.println("\nEnd of Test");
+		System.out.print("Length of Path: " + (m.BFSSolution.get(m.BFSSolution.size()-1).getDistance()+1) + "\n");
+		
+		DisplayMaze display4 = new DisplayMaze(m.getGrid());
+		display4.showPath(m.BFSSolution);
+		view = display4.getDisplay();
+		for (int i = 0; i < 11; i++) {
+			for (int j = 0; j < 11; j++) {
+				System.out.print(view[i][j]);
+			}
+			System.out.print("\n");
+		}
 
-
+		
+		DisplayMaze display5 = new DisplayMaze(m.getGrid());
+		display5.showAllPaths(shortestPath);
+		view = display5.getDisplay();
+		for (int i = 0; i < 11; i++) {
+			for (int j = 0; j < 11; j++) {
+				System.out.print(view[i][j]);
+			}
+			System.out.print("\n");
+		}
 
 		System.out.println("\nEnd of Test");
 	}
