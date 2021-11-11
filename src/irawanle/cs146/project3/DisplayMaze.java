@@ -20,18 +20,18 @@ public class DisplayMaze {
 		for (int x = 0; x < size; x++) {
 				for (int y = 0; y < size; y++) {
 					if (x == 0 || x % 2 == 0) {
-						if (y == 0 || y % 2 == 0) display[x][y] = " + ";
-						else display[x][y] = "---";
+						if (y == 0 || y % 2 == 0) display[x][y] = "+";
+						else display[x][y] = "-";
 					}
 					else {
-						if (y == 0 || y % 2 == 0) display[x][y] = " | ";
-						else display[x][y] = "   ";
+						if (y == 0 || y % 2 == 0) display[x][y] = "|";
+						else display[x][y] = " ";
 					}
 					
 				}		
 			}
-		display[0][1] = "   ";
-		display[size-1][size-2] = "   ";
+		display[0][1] = " ";
+		display[size-1][size-2] = " ";
 		int i = 1;
 		int j = 1;
 		int x = 0;
@@ -43,10 +43,10 @@ public class DisplayMaze {
 				Vertex curr = theMaze.getCell(x, y);
 //				x = curr.getCoordX();
 //				y = curr.getCoordY();
-				if (curr.getWallStatus()[0] == false) display[i-1][j] = "   "; 
-				if (curr.getWallStatus()[1] == false) display[i][j+1] = "   ";
-				if (curr.getWallStatus()[2] == false) display[i+1][j] = "   ";
-				if (curr.getWallStatus()[3] == false) display[i][j-1] = "   ";
+				if (curr.getWallStatus()[0] == false) display[i-1][j] = " "; 
+				if (curr.getWallStatus()[1] == false) display[i][j+1] = " ";
+				if (curr.getWallStatus()[2] == false) display[i+1][j] = " ";
+				if (curr.getWallStatus()[3] == false) display[i][j-1] = " ";
 				y++;
 				j += 2;
 			}
@@ -59,7 +59,7 @@ public class DisplayMaze {
 		for (Vertex v: solution) {
 			int i = (v.getCoordX()*2) + 1;
 			int j = (v.getCoordY()*2) + 1;
-			display[i][j] = " # ";
+			display[i][j] = "#";
 		}
 	}
 	
@@ -68,7 +68,7 @@ public class DisplayMaze {
 		for (Vertex v: solution) {
 			int i = (v.getCoordX()*2) + 1;
 			int j = (v.getCoordY()*2) + 1;
-			display[i][j] = " "+ count%10 + " ";
+			display[i][j] = "" + count%10 + "";
 			count++;
 		}
 	}
