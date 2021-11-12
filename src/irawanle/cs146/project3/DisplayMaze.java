@@ -82,6 +82,9 @@ public class DisplayMaze {
 		return display;
 	}
 	
+	/*
+	 * @Override toString method to use System.out to print DisplayMaze object
+	 */
 	public String toString() {
 		String output = "";
 		for (int i = 0; i < size; i++) {
