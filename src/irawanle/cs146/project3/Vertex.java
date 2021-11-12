@@ -80,6 +80,10 @@ public class Vertex {
 		return walls;
 	}
 	
+	public void breakDownWall(int index) {
+		walls[index] = false;
+	}
+	
 	/**
 	 * setColor method assigns color to vertex
 	 * white - unexplored

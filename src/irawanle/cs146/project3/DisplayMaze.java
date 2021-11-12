@@ -81,6 +81,18 @@ public class DisplayMaze {
 	public String[][] getDisplay(){
 		return display;
 	}
+	
+	public String toString() {
+		String output = "";
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				output += display[i][j];
+			}
+			output += "\n";
+		}
+		output += "\n";
+		return output;
+	}
 //	public static void main(String [] args) {
 //		Grid g = new Grid(3);
 //		DisplayMaze m = new DisplayMaze(g);
