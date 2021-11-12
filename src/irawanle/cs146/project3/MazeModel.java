@@ -373,7 +373,7 @@ public class MazeModel {
 	public ArrayList<Vertex> findShortestPath(ArrayList<Vertex> path){
 		ArrayList<Vertex> shortestPath = new ArrayList<Vertex>();
 		shortestPath.add(path.get(path.size()-1));
-		for (int i = path.size()-1; i >= 0; i--) {
+		for (int i = path.size()-1; i > 0; i--) {
 			shortestPath.add(path.get(i).getParent());
 		}
 		return shortestPath;
@@ -458,10 +458,10 @@ public class MazeModel {
 		System.out.print(display3);
 		
 		ArrayList<Vertex> shortestPath = m.findEscapeRouteBroadly();
-//		System.out.println("\nBFS Solution Path: ");
-//		for (Vertex i: m.BFSSolution) System.out.print("(" + i.getCoordX() + "," + i.getCoordY() + ") ");
-//		System.out.print("\n");
-//		System.out.print("Length of Path: " + (m.BFSSolution.get(m.BFSSolution.size()-1).getDistance()+1) + "\n");
+		System.out.println("\nBFS Solution Path: ");
+		for (Vertex i: m.BFSSolution) System.out.print("(" + i.getCoordX() + "," + i.getCoordY() + ") ");
+		System.out.print("\n");
+		System.out.print("Length of Path: " + (m.BFSSolution.get(m.BFSSolution.size()-1).getDistance()+1) + "\n");
 		
 		for (int i = 0; i < shortestPath.size(); i++) System.out.println(i + " " + shortestPath.get(i).getDistance());
 		  
