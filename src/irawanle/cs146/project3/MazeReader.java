@@ -71,59 +71,13 @@ public class MazeReader {
 	 public static void main( String [] args) {
 		 MazeReader read = new MazeReader();
 		 String [][] m = read.readFile("maze4.txt");
-		 for (int i = 0; i < 9; i++) {
-				for (int j = 0; j < 9; j++) {
-					System.out.print(m
-							[i][j]);
-				}
-				System.out.print("\n");
-			}
+
 		 Grid output = read.createMaze(m);
-		 
+		 DisplayMaze display = new DisplayMaze(output);
+		 System.out.print(display);
+		 //display.createFile(display.toString(), ("maze"+ output.getLimitOfGrid()));
 		 MazeModel solveMaze = new MazeModel(output);
-		 ArrayList<Vertex> DFSExplore = solveMaze.findEscapeRouteDeeply();
-		 
-		 System.out.println("\nDFS Solution Path:");
-			for (Vertex v : solveMaze.getDFSSolution())
-				System.out.print("(" + v.getCoordX() + "," + v.getCoordY() + ") ");
-			System.out.println("\n");
-			
-			System.out.println("\nExplored Vertices Path:");
-			for (Vertex v : DFSExplore)
-				System.out.print("(" + v.getCoordX() + "," + v.getCoordY() + ") ");
-			System.out.println("\n");
-			
-			DisplayMaze display2 = new DisplayMaze(solveMaze.getGrid());
-			display2.showPath(solveMaze.getDFSSolution());
-			System.out.print(display2);
-			
-			DisplayMaze display3 = new DisplayMaze(solveMaze.getGrid());
-			display3.showAllPaths(DFSExplore);
-			System.out.print(display3);
-		 
-		 ArrayList<Vertex> BFSExplore = solveMaze.findEscapeRouteBroadly();
-		 System.out.println("\nBFS Solution Path: ");
-			for (Vertex i: solveMaze.getBFSSolution()) System.out.print("(" + i.getCoordX() + "," + i.getCoordY() + ") ");
-			System.out.print("\n");
-			System.out.print("Length of Path: " + (solveMaze.getBFSSolution().get(solveMaze.getBFSSolution().size()-1).getDistance()+1) + "\n");
-			
-			DisplayMaze display4 = new DisplayMaze(solveMaze.getGrid());
-			display4.showPath(solveMaze.getBFSSolution());
-			System.out.print(display4);
-	
-			
-			DisplayMaze display5 = new DisplayMaze(solveMaze.getGrid());
-			display5.showAllPaths(BFSExplore);
-			System.out.print(display5);
-		 
-//		 DisplayMaze n = new DisplayMaze(output);
-//			for (int i = 0; i < n.size; i++) {
-//				for (int j = 0; j < n.size; j++) {
-//					System.out.print(n.getDisplay()[i][j]);
-//				}
-//				System.out.print("\n");
-//			}
-		 
+		 solveMaze.showResults();
 		 
 	 }
 

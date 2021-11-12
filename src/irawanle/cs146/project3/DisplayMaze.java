@@ -1,6 +1,7 @@
 package irawanle.cs146.project3;
 
 import java.util.ArrayList;
+import java.io.*;
 
 /**
  * The DisplayMaze class creates an ASCII 
@@ -95,6 +96,23 @@ public class DisplayMaze {
 		}
 		output += "\n";
 		return output;
+	}
+	
+	public void createFile(String output, String name) {
+		try {
+            FileOutputStream fileOut
+                = new FileOutputStream(name + ".txt");
+  
+            // converting string into byte array
+            byte b[] = output.getBytes();
+            fileOut.write(b);
+            fileOut.close();
+            System.out.println(
+                name + ".txt" + " is stored");
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
 	}
 //	public static void main(String [] args) {
 //		Grid g = new Grid(3);
