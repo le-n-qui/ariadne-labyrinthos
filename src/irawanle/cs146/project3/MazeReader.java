@@ -3,8 +3,6 @@ package irawanle.cs146.project3;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-
 
 /**
  * The MazeReader class handles reading 
