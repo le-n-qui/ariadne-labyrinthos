@@ -12,6 +12,14 @@ public class Grid {
 	private int size;
 	
 	/**
+	 * No-arg constructor
+	 */
+	public Grid() {
+		mazeGrid = null;
+		size = 0;
+	}
+	
+	/**
 	 * Constructor: creating a grid given an input size
 	 * @param gridSize
 	 */
@@ -49,6 +57,17 @@ public class Grid {
 				mazeGrid[row][col].resetDistance();
 			}
 		}
+	}
+	
+	/**
+	 * setUpGrid method sets the size for grid
+	 * resize the grid with new and fills in new vertices.
+	 * @param gridSize size of new grid
+	 */
+	public void setUpGrid(int gridSize) {
+		size = gridSize;
+		mazeGrid = new Vertex[gridSize][gridSize];
+		populateGrid();
 	}
 	
 	/**
