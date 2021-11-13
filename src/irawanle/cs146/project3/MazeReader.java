@@ -6,41 +6,49 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
-
+/**
+ * The MazeReader class handles reading 
+ * text files containing a maze in ASCII format.
+ * @author Ashley Irawan & Andy Qui Le
+ */
 public class MazeReader {
 	 public String[][] readFile(String filename) {
 			int counter = 0;
 			String[][] maze = null;
-			//Reads the file and builds student array.
+			// Reads the file and builds 2-D String array
+			// representing the maze.
 			try {
-			FileReader file = new FileReader(filename); 		//Open the file using FileReader Object.
-			BufferedReader buff = new BufferedReader(file);
-			boolean eof = false;
-			String sizeString = buff.readLine();
-			int size = Integer.parseInt(sizeString.substring(0, 1));
-			int displaySize = (size*2)+1;
-			maze = new String[displaySize][displaySize];
+				//Open the file using FileReader Object.
+				FileReader file = new FileReader(filename); 		
+				BufferedReader buff = new BufferedReader(file);
+				boolean eof = false;
+				String sizeString = buff.readLine();
+				// Extract the size of the maze in first line
+				int size = Integer.parseInt(sizeString.substring(0, 1));
+				// Transform the size of maze into the size of the maze view
+				int displaySize = (size*2)+1;
+				// Create the 2-D String array
+				maze = new String[displaySize][displaySize];
 
-			while (!eof)										//In a loop read a line using readLine method.
-			{ 
-				String line = buff.readLine();
-				if (line == null)
-					eof = true;
-				else
-				{
-					for (int i= 0; i < line.length(); i++) 
+				// After first line, read line by line in a loop using readLine method.
+				while (!eof) { 
+					String line = buff.readLine();
+					if (line == null)
+						eof = true;
+					else
 					{
-						maze[counter][i] = Character.toString(line.charAt(i));
+						for (int i= 0; i < line.length(); i++) {
+							maze[counter][i] = Character.toString(line.charAt(i));
+						}
+						counter++;
 					}
-					counter++;
 				}
-			}
-			buff.close();
+				buff.close();
 			} 
-			
 			catch (IOException e) {
 				System.out.println("Error -- " + e.toString());
 			}
+			
 			return maze;
 	 }
 	 
