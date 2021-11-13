@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
+//import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -418,7 +418,6 @@ class TestMazeGenerator {
 	 * Testing results of DFS and BFS
 	 * with text file (maze10.txt) from Dr. Potika
 	 */
-	@Disabled
 	@Test
 	void testFile4() {
 		// Read in data from local text file
@@ -452,7 +451,6 @@ class TestMazeGenerator {
 		// we verify that DFS and BFS return the same solution
 		for (int i = 0; i < view2.getSize(); i++) {
 			for (int j = 0; j < view2.getSize(); j++) {
-				System.out.println("i: " + i + " j: " + j);
 				assertEquals(dfsView[i][j], bfsView[i][j]);
 			}
 		}
@@ -462,7 +460,6 @@ class TestMazeGenerator {
 	 * Testing results of DFS and BFS
 	 * with text file (maze20.txt) from Dr. Potika
 	 */
-	@Disabled
 	@Test
 	void testFile5() {
 		// Read in data from local text file
@@ -496,7 +493,6 @@ class TestMazeGenerator {
 		// we verify that DFS and BFS return the same solution
 		for (int i = 0; i < view2.getSize(); i++) {
 			for (int j = 0; j < view2.getSize(); j++) {
-				System.out.println("i: " + i + " j: " + j);
 				assertEquals(dfsView[i][j], bfsView[i][j]);
 			}
 		}
