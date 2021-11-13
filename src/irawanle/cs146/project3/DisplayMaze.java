@@ -1,6 +1,7 @@
 package irawanle.cs146.project3;
 
 import java.util.ArrayList;
+import java.io.*;
 
 /**
  * The DisplayMaze class creates an ASCII 
@@ -13,7 +14,10 @@ public class DisplayMaze {
 	// size of the maze 
 	int size;
 
-
+	/**
+	 * Constructor - create a view of the maze in ASCII
+	 * @param theMaze
+	 */
 	public DisplayMaze(Grid theMaze){
 		size = ((theMaze.getLimitOfGrid()+1)*2)-1;
 		display = new String[size][size];
@@ -41,8 +45,6 @@ public class DisplayMaze {
 			y = 0;
 			while (j < size-1) {
 				Vertex curr = theMaze.getCell(x, y);
-//				x = curr.getCoordX();
-//				y = curr.getCoordY();
 				if (curr.getWallStatus()[0] == false) display[i-1][j] = " "; 
 				if (curr.getWallStatus()[1] == false) display[i][j+1] = " ";
 				if (curr.getWallStatus()[2] == false) display[i+1][j] = " ";
@@ -55,6 +57,12 @@ public class DisplayMaze {
 		}
 	}
 	
+	/**
+	 * showPath method takes an array list
+	 * of the vertices. It adds a hash mark wherever
+	 * the vertex is in the solution path.
+	 * @param solution array list of vertices in the solution path
+	 */
 	public void showPath(ArrayList<Vertex> solution) {
 		for (Vertex v: solution) {
 			int i = (v.getCoordX()*2) + 1;
@@ -62,7 +70,13 @@ public class DisplayMaze {
 			display[i][j] = "#";
 		}
 	}
-	
+	/**
+	 * showAllPaths method takes an array list of the vertices.
+	 * It adds the rightmost digit of the 
+	 * actual number in the order in which 
+	 * the vertex was visited.
+	 * @param solution array list of vertices in the explore path
+	 */
 	public void showAllPaths(ArrayList<Vertex> solution) {
 		int count = 0;
 		for (Vertex v: solution) {
@@ -73,13 +87,58 @@ public class DisplayMaze {
 		}
 	}
 
-	
+	/**
+	 * getSize method retrieves the size of the display view.
+	 * @return the size of the display view
+	 */
 	public int getSize() {
 		return size;
 	}
 	
+	/**
+	 * getDisplay method retrieves the 2D String array
+	 * representing the display view.
+	 * @return the 2D String array
+	 */
 	public String[][] getDisplay(){
 		return display;
+	}
+	
+	/**
+	 * @Override toString method to use System.out to print DisplayMaze object
+	 */
+	public String toString() {
+		String output = "";
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				output += display[i][j];
+			}
+			output += "\n";
+		}
+		output += "\n";
+		return output;
+	}
+	
+	/**
+	 * createFile method creates a text file
+	 * from a string produced from the 
+	 * transformation of the 2D String array.
+	 * @param output
+	 * @param name
+	 */
+	public void createFile(String output, String name) {
+		try {
+            FileOutputStream fileOut
+                = new FileOutputStream(name + ".txt");
+  
+            // converting string into byte array
+            byte b[] = output.getBytes();
+            fileOut.write(b);
+            fileOut.close();
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
 	}
 //	public static void main(String [] args) {
 //		Grid g = new Grid(3);

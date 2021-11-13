@@ -1,6 +1,7 @@
 package irawanle.cs146.project3;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.LinkedList;
@@ -42,6 +43,24 @@ public class MazeModel {
 	 */
 	public Grid getGrid() {
 		return theMaze;
+	}
+	
+	/**
+	 * getDFSSolution method returns an
+	 * array list of vertices using DFS
+	 * @return solution path found by DFS search method
+	 */
+	public ArrayList<Vertex> getDFSSolution(){
+		return DFSSolution;
+	}
+	
+	/**
+	 * getBFSSolution method returns an
+	 * array list of vertices using BFS
+	 * @return solution path found by BFS search method
+	 */
+	public ArrayList<Vertex> getBFSSolution(){
+		return BFSSolution;
 	}
 	
 	/**
@@ -318,20 +337,22 @@ public class MazeModel {
 	 */
 	public ArrayList<Vertex> findEscapeRouteBroadly() {
 		ArrayList<Vertex> routeList = new ArrayList<Vertex>();
-		ArrayList<Vertex> exploreList = new ArrayList<Vertex>();
 		theMaze.resetGrid(); // reset each cell's attributes to defaults
 		Queue<Vertex> queue = new LinkedList<Vertex>();
 		int x = START_COORD_X;
 		int y = START_COORD_Y;
 		Vertex curr = theMaze.getCell(x, y);
 		queue.add(curr);
-		exploreList.add(curr);
-		 
+		
 		while (queue.size() != 0) {
 			curr = queue.poll();
 			routeList.add(curr);
 			x = curr.getCoordX();
 			y = curr.getCoordY();
+			if (curr.getCoordX() == theMaze.getLimitOfGrid()-1 && curr.getCoordY() == theMaze.getLimitOfGrid()-1) {
+				BFSSolution = findShortestPath(routeList);
+				return routeList;
+				}
 			
 			ArrayList<Vertex> neighbors = new ArrayList<Vertex>();
 			if (curr.getWallStatus()[0] == false) neighbors.add(theMaze.getCell(x-1, y)); 
@@ -345,18 +366,30 @@ public class MazeModel {
 					v.updateDistance(curr.getDistance());
 					v.setParent(curr);
 					queue.add(v);
-					exploreList.add(v);
 				}
 			}
 			curr.setColor(ColorCode.BLACK);
-			if (curr.getCoordX() == theMaze.getLimitOfGrid()-1 && curr.getCoordY() == theMaze.getLimitOfGrid()-1) {
-				BFSSolution = routeList;
-				break;
-				}
 			}
-		return exploreList;
-		}
 		
+		return routeList;
+		}
+	
+	/*
+	 * Find Shortest Path 
+	 * @param path array list of Vertex objects that maps all the explored paths to reach end point
+	 * @return array list of Vertex objects with the route that has the shortest distance
+	 */
+	public ArrayList<Vertex> findShortestPath(ArrayList<Vertex> path){
+		ArrayList<Vertex> shortestPath = new ArrayList<Vertex>();
+		Vertex curr = path.get(path.size()-1);
+		shortestPath.add(curr);
+		while(curr.getParent() != null) {
+			shortestPath.add(curr.getParent());
+			curr = curr.getParent();
+		}
+		Collections.reverse(shortestPath);
+		return shortestPath;
+	}
 
 	
 	/**
@@ -405,83 +438,62 @@ public class MazeModel {
 		neighbor.neighborPresentAt(currCellPos);
 	}
 	
+	public void showResults() {
+		 ArrayList<Vertex> DFSExplore = this.findEscapeRouteDeeply();
+		 
+		 System.out.println("\nDFS: \n");
+			DisplayMaze display2 = new DisplayMaze(this.getGrid());
+			display2.showPath(this.getDFSSolution());
+			System.out.print(display2);
+			display2.createFile(display2.toString(), ("DFS" + this.getGrid().getLimitOfGrid()));
+			
+			DisplayMaze display3 = new DisplayMaze(this.getGrid());
+			display3.showAllPaths(DFSExplore);
+			System.out.print(display3);
+			
+			 System.out.print("\nPath: ");
+				for (Vertex v : this.getDFSSolution())
+					System.out.print("(" + v.getCoordX() + "," + v.getCoordY() + ") ");
+				System.out.println("\n");
+				System.out.println("Length of Path: " + (this.getDFSSolution().get(this.getDFSSolution().size()-1).getDistance()+1) + "\n");
+
+				System.out.println("Visited Cells: " + DFSExplore.size() + "\n");
+			
+			
+		 
+		 ArrayList<Vertex> BFSExplore = this.findEscapeRouteBroadly();
+		 System.out.println("\nBFS: \n");
+		 
+			
+			DisplayMaze display4 = new DisplayMaze(this.getGrid());
+			display4.showPath(this.getBFSSolution());
+			System.out.print(display4);
+			display4.createFile(display4.toString(), ("BFS"+ this.getGrid().getLimitOfGrid()));
+	
+			
+			DisplayMaze display5 = new DisplayMaze(this.getGrid());
+			display5.showAllPaths(BFSExplore);
+			System.out.print(display5);
+			
+			System.out.print("\nPath: ");
+			for (Vertex i: this.getBFSSolution()) System.out.print("(" + i.getCoordX() + "," + i.getCoordY() + ") ");
+			System.out.print("\n\n");
+			System.out.print("Length of Path: " + (this.getBFSSolution().get(this.getBFSSolution().size()-1).getDistance()+1) + "\n");
+			System.out.print("\n");
+			System.out.println("Visited Cells: " + BFSExplore.size() + "\n");
+	}
+	
 	/**
 	 * This main method is used to test whether 
 	 * various methods do what they are supposed to do.
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Grid g = new Grid(5);
+		Grid g = new Grid(4);
 		MazeModel m = new MazeModel(g);
 		m.buildMaze();
-		
-		DisplayMaze display = new DisplayMaze(m.getGrid());
-		String[][] view = display.getDisplay();
-		for (int i = 0; i < 11; i++) {
-			for (int j = 0; j < 11; j++) {
-				System.out.print(view[i][j]);
-			}
-			System.out.print("\n");
-		}
-		
-		ArrayList<Vertex> solution = m.findEscapeRouteDeeply();
-		System.out.println("\nDFS Solution Path:");
-		for (Vertex v : m.DFSSolution)
-			System.out.print("(" + v.getCoordX() + "," + v.getCoordY() + ") ");
-		System.out.println("\n");
-		System.out.println("\nExplored Vertices Path:");
-		for (Vertex v : solution)
-			System.out.print("(" + v.getCoordX() + "," + v.getCoordY() + ") ");
-		System.out.println("\n");
-		
-		DisplayMaze display2 = new DisplayMaze(m.getGrid());
-		display2.showPath(m.DFSSolution);
-		view = display2.getDisplay();
-		for (int i = 0; i < 11; i++) {
-			for (int j = 0; j < 11; j++) {
-				System.out.print(view[i][j]);
-			}
-			System.out.print("\n");
-		}
-		System.out.print("\n");
-
-		DisplayMaze display3 = new DisplayMaze(m.getGrid());
-		display3.showAllPaths(solution);
-		view = display3.getDisplay();
-		for (int i = 0; i < 11; i++) {
-			for (int j = 0; j < 11; j++) {
-				System.out.print(view[i][j]);
-			}
-			System.out.print("\n");
-		}
-		
-		ArrayList<Vertex> shortestPath = m.findEscapeRouteBroadly();
-		System.out.println("\nBFS Solution Path: ");
-		for (Vertex i: m.BFSSolution) System.out.print("(" + i.getCoordX() + "," + i.getCoordY() + ") ");
-		System.out.print("\n");
-		System.out.print("Length of Path: " + (m.BFSSolution.get(m.BFSSolution.size()-1).getDistance()+1) + "\n");
-		
-		DisplayMaze display4 = new DisplayMaze(m.getGrid());
-		display4.showPath(m.BFSSolution);
-		view = display4.getDisplay();
-		for (int i = 0; i < 11; i++) {
-			for (int j = 0; j < 11; j++) {
-				System.out.print(view[i][j]);
-			}
-			System.out.print("\n");
-		}
-
-		
-		DisplayMaze display5 = new DisplayMaze(m.getGrid());
-		display5.showAllPaths(shortestPath);
-		view = display5.getDisplay();
-		for (int i = 0; i < 11; i++) {
-			for (int j = 0; j < 11; j++) {
-				System.out.print(view[i][j]);
-			}
-			System.out.print("\n");
-		}
-
-		System.out.println("\nEnd of Test");
+		DisplayMaze display = new DisplayMaze(g);
+		display.createFile(display.toString(), ("OwnMaze"+ g.getLimitOfGrid()));
+		m.showResults();
 	}
 }
