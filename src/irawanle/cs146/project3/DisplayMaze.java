@@ -140,6 +140,7 @@ public class DisplayMaze {
             System.out.println(e);
         }
 	}
+	
 //	public static void main(String [] args) {
 //		Grid g = new Grid(3);
 //		DisplayMaze m = new DisplayMaze(g);
