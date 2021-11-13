@@ -439,48 +439,48 @@ public class MazeModel {
 	}
 	
 	public void showResults() {
-		 ArrayList<Vertex> DFSExplore = this.findEscapeRouteDeeply();
+		ArrayList<Vertex> DFSExplore = this.findEscapeRouteDeeply();
 		 
-		 System.out.println("\nDFS: \n");
-			DisplayMaze display2 = new DisplayMaze(this.getGrid());
-			display2.showPath(this.getDFSSolution());
-			System.out.print(display2);
-			display2.createFile(display2.toString(), ("DFS" + this.getGrid().getLimitOfGrid()));
+		System.out.println("\nDFS: \n");
+		DisplayMaze display2 = new DisplayMaze(this.getGrid());
+		display2.showPath(this.getDFSSolution());
+		System.out.print(display2);
+		display2.createFile(display2.toString(), ("DFS" + this.getGrid().getLimitOfGrid()));
 			
-			DisplayMaze display3 = new DisplayMaze(this.getGrid());
-			display3.showAllPaths(DFSExplore);
-			System.out.print(display3);
+		DisplayMaze display3 = new DisplayMaze(this.getGrid());
+		display3.showAllPaths(DFSExplore);
+		System.out.print(display3);
 			
-			 System.out.print("\nPath: ");
-				for (Vertex v : this.getDFSSolution())
-					System.out.print("(" + v.getCoordX() + "," + v.getCoordY() + ") ");
-				System.out.println("\n");
-				System.out.println("Length of Path: " + (this.getDFSSolution().get(this.getDFSSolution().size()-1).getDistance()+1) + "\n");
+		System.out.print("\nPath: ");
+		for (Vertex v : this.getDFSSolution())
+			System.out.print("(" + v.getCoordX() + "," + v.getCoordY() + ") ");
+		System.out.println("\n");
+		System.out.println("Length of Path: " + (this.getDFSSolution().get(this.getDFSSolution().size()-1).getDistance()+1) + "\n");
 
-				System.out.println("Visited Cells: " + DFSExplore.size() + "\n");
+		System.out.println("Visited Cells: " + DFSExplore.size() + "\n");
 			
 			
 		 
-		 ArrayList<Vertex> BFSExplore = this.findEscapeRouteBroadly();
-		 System.out.println("\nBFS: \n");
+		ArrayList<Vertex> BFSExplore = this.findEscapeRouteBroadly();
+		System.out.println("\nBFS: \n");
 		 
 			
-			DisplayMaze display4 = new DisplayMaze(this.getGrid());
-			display4.showPath(this.getBFSSolution());
-			System.out.print(display4);
-			display4.createFile(display4.toString(), ("BFS"+ this.getGrid().getLimitOfGrid()));
+		DisplayMaze display4 = new DisplayMaze(this.getGrid());
+		display4.showPath(this.getBFSSolution());
+		System.out.print(display4);
+		display4.createFile(display4.toString(), ("BFS"+ this.getGrid().getLimitOfGrid()));
 	
 			
-			DisplayMaze display5 = new DisplayMaze(this.getGrid());
-			display5.showAllPaths(BFSExplore);
-			System.out.print(display5);
+		DisplayMaze display5 = new DisplayMaze(this.getGrid());
+		display5.showAllPaths(BFSExplore);
+		System.out.print(display5);
 			
-			System.out.print("\nPath: ");
-			for (Vertex i: this.getBFSSolution()) System.out.print("(" + i.getCoordX() + "," + i.getCoordY() + ") ");
-			System.out.print("\n\n");
-			System.out.print("Length of Path: " + (this.getBFSSolution().get(this.getBFSSolution().size()-1).getDistance()+1) + "\n");
-			System.out.print("\n");
-			System.out.println("Visited Cells: " + BFSExplore.size() + "\n");
+		System.out.print("\nPath: ");
+		for (Vertex i: this.getBFSSolution()) System.out.print("(" + i.getCoordX() + "," + i.getCoordY() + ") ");
+		System.out.print("\n\n");
+		System.out.print("Length of Path: " + (this.getBFSSolution().get(this.getBFSSolution().size()-1).getDistance()+1) + "\n");
+		System.out.print("\n");
+		System.out.println("Visited Cells: " + BFSExplore.size() + "\n");
 	}
 	
 	/**
