@@ -28,6 +28,7 @@ public class MazeReader {
 				FileReader file = new FileReader(filename); 		
 				BufferedReader buff = new BufferedReader(file);
 				boolean eof = false;
+				
 				String sizeString = buff.readLine();
 				// Extract the size of the maze in first line
 				int size = Integer.parseInt(sizeString.substring(0, 1));

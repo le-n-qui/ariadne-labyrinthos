@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
  */
 class TestMazeGenerator {
 	static MazeReader read;
+	static Grid grid;
 	
 	/**
 	 * This method will prepare objects.
@@ -48,19 +49,98 @@ class TestMazeGenerator {
 	
 	@BeforeEach
 	void setUp() throws Exception {
-
+		grid = new Grid();
 	}
 	
 	
 	@Test
 	void test1() {
+		// Read in data from local text file
+		String[][] testMaze = read.readFile("Ateam_maze6.txt");
+		// maze size
+		int mazeSize = 6;
+		// set up new grid
+		grid.setUpGrid(mazeSize);
+		// Create maze
+		MazeModel maze = new MazeModel(grid);
+		// Build maze
+		maze.buildMaze();
+		// Find DFS solution
+		maze.findEscapeRouteDeeply();
 		
+		// Create view 1
+		DisplayMaze view1 = new DisplayMaze(grid);
+		// Mark solution path on maze
+		view1.showPath(maze.getDFSSolution());
+		// Get 2D String array with dfs solution
+		String[][] dfsView = view1.getDisplay();
+		// Compare two 2D String arrays
+		for (int i = 0; i < view1.getSize(); i++) {
+			for (int j = 0; j < view1.getSize(); j++) {
+				assertEquals(testMaze[i][j], dfsView[i][j]);
+			}
+		}
+		
+		// Find BFS solution
+		maze.findEscapeRouteBroadly();
+		// Create view 2
+		DisplayMaze view2 = new DisplayMaze(grid);
+		// Mark solution path on maze
+		view2.showPath(maze.getBFSSolution());
+		// 2D string array with bfs solution
+		String[][] bfsView = view2.getDisplay();
+		// Compare two 2D String arrays
+		for (int i = 0; i < view2.getSize(); i++) {
+			for (int j = 0; j < view2.getSize(); j++) {
+				assertEquals(testMaze[i][j], bfsView[i][j]);
+			}
+		}
 		
 	}
 	
 	@Test 
 	void test2() {
-		
+		// Read in data from local text file
+		String[][] testMaze = read.readFile("Ateam_maze7.txt");
+		// maze size
+		int mazeSize = 7;
+		// set up new grid
+		grid.setUpGrid(mazeSize);
+		// Create maze
+		MazeModel maze = new MazeModel(grid);
+		// Build maze
+		maze.buildMaze();
+		// Find DFS solution
+		maze.findEscapeRouteDeeply();
+
+		// Create view 1
+		DisplayMaze view1 = new DisplayMaze(grid);
+		// Mark solution path on maze
+		view1.showPath(maze.getDFSSolution());
+		// Get 2D String array with dfs solution
+		String[][] dfsView = view1.getDisplay();
+		// Compare two 2D String arrays
+		for (int i = 0; i < view1.getSize(); i++) {
+			for (int j = 0; j < view1.getSize(); j++) {
+				assertEquals(testMaze[i][j], dfsView[i][j]);
+			}
+		}
+
+		// Find BFS solution
+		maze.findEscapeRouteBroadly();
+		// Create view 2
+		DisplayMaze view2 = new DisplayMaze(grid);
+		// Mark solution path on maze
+		view2.showPath(maze.getBFSSolution());
+		// 2D string array with bfs solution
+		String[][] bfsView = view2.getDisplay();
+		// Compare two 2D String arrays
+		for (int i = 0; i < view2.getSize(); i++) {
+			for (int j = 0; j < view2.getSize(); j++) {
+				assertEquals(testMaze[i][j], bfsView[i][j]);
+			}
+		}
+				
 	}
 
 }
