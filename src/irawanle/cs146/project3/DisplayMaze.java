@@ -128,13 +128,20 @@ public class DisplayMaze {
 	 */
 	public void createFile(String output, String name) {
 		try {
-            FileOutputStream fileOut
+           FileOutputStream fileOut
                 = new FileOutputStream(name + ".txt");
-  
-            // converting string into byte array
-            byte b[] = output.getBytes();
-            fileOut.write(b);
-            fileOut.close();
+           
+           int gridSize = (size - 1)/2;
+           String number = "" + gridSize ;
+           fileOut.write(number.getBytes());
+           fileOut.write(" ".getBytes());
+           fileOut.write(number.getBytes());
+           fileOut.write("\n".getBytes());
+
+           // converting string into byte array
+           byte b[] = output.getBytes();
+           fileOut.write(b);
+           fileOut.close();
         }
         catch (Exception e) {
             System.out.println(e);
