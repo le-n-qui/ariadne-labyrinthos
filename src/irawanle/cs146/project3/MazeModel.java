@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
@@ -46,10 +45,20 @@ public class MazeModel {
 		return theMaze;
 	}
 	
+	/**
+	 * getDFSSolution method returns an
+	 * array list of vertices using DFS
+	 * @return solution path found by DFS search method
+	 */
 	public ArrayList<Vertex> getDFSSolution(){
 		return DFSSolution;
 	}
 	
+	/**
+	 * getBFSSolution method returns an
+	 * array list of vertices using BFS
+	 * @return solution path found by BFS search method
+	 */
 	public ArrayList<Vertex> getBFSSolution(){
 		return BFSSolution;
 	}
@@ -367,8 +376,8 @@ public class MazeModel {
 	
 	/*
 	 * Find Shortest Path 
-	 * @param arraylist of Vertex objects that maps all the explored paths to reach endpoint
-	 * @return arraylist of Vertex objects with the route that has the shortest distance
+	 * @param path array list of Vertex objects that maps all the explored paths to reach end point
+	 * @return array list of Vertex objects with the route that has the shortest distance
 	 */
 	public ArrayList<Vertex> findShortestPath(ArrayList<Vertex> path){
 		ArrayList<Vertex> shortestPath = new ArrayList<Vertex>();
