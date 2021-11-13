@@ -12,6 +12,14 @@ import java.util.ArrayList;
  * @author Ashley Irawan & Andy Qui Le
  */
 public class MazeReader {
+	
+	/**
+	 * readFile method takes a filename, reads in
+	 * data from the text file, and builds a 2D
+	 * String array.
+	 * @param filename 
+	 * @return a 2D String array
+	 */
 	 public String[][] readFile(String filename) {
 			int counter = 0;
 			String[][] maze = null;
@@ -52,6 +60,14 @@ public class MazeReader {
 			return maze;
 	 }
 	 
+	 /**
+	  * mazeRead method takes a 2D String array (given maze)
+	  * and builds a Grid object with Vertex objects whose
+	  * boolean array will be changed according to what is
+	  * seen on the maze from text file.
+	  * @param mazeRead 2D String array
+	  * @return the maze grid
+	  */
 	 public Grid createMaze(String [][] mazeRead) {
 		 int gridSize = (mazeRead.length-1)/2;
 		 Grid maze = new Grid(gridSize);
