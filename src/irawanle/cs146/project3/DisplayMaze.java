@@ -18,22 +18,22 @@ public class DisplayMaze {
 	 * Constructor - create a view of the maze in ASCII
 	 * @param theMaze
 	 */
-	public DisplayMaze(Grid theMaze){
+	public DisplayMaze(Grid theMaze) {
 		size = ((theMaze.getLimitOfGrid()+1)*2)-1;
 		display = new String[size][size];
 		for (int x = 0; x < size; x++) {
-				for (int y = 0; y < size; y++) {
-					if (x == 0 || x % 2 == 0) {
-						if (y == 0 || y % 2 == 0) display[x][y] = "+";
-						else display[x][y] = "-";
-					}
-					else {
-						if (y == 0 || y % 2 == 0) display[x][y] = "|";
-						else display[x][y] = " ";
-					}
-					
-				}		
-			}
+			for (int y = 0; y < size; y++) {
+				if (x == 0 || x % 2 == 0) {
+					if (y == 0 || y % 2 == 0) display[x][y] = "+";
+					else display[x][y] = "-";
+				}
+				else {
+					if (y == 0 || y % 2 == 0) display[x][y] = "|";
+					else display[x][y] = " ";
+				}
+
+			}		
+		}
 		display[0][1] = " ";
 		display[size-1][size-2] = " ";
 		int i = 1;
@@ -70,6 +70,7 @@ public class DisplayMaze {
 			display[i][j] = "#";
 		}
 	}
+	
 	/**
 	 * showAllPaths method takes an array list of the vertices.
 	 * It adds the rightmost digit of the 
@@ -146,7 +147,10 @@ public class DisplayMaze {
         catch (Exception e) {
             System.out.println(e);
         }
+	
 	}
+}
+
 	
 //	public static void main(String [] args) {
 //		Grid g = new Grid(3);
@@ -159,4 +163,3 @@ public class DisplayMaze {
 //		}
 //	}
 
-}
