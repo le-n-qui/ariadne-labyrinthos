@@ -31,7 +31,7 @@ public class MazeReader {
 				
 				String sizeString = buff.readLine();
 				// Extract the size of the maze in first line
-				int size = Integer.parseInt(sizeString.substring(0, 1));
+				int size = Integer.parseInt(sizeString.substring(0, sizeString.indexOf(' ')));
 				// Transform the size of maze into the size of the maze view
 				int displaySize = (size*2)+1;
 				// Create the 2-D String array
@@ -93,7 +93,7 @@ public class MazeReader {
 	 
 	 public static void main( String [] args) {
 		 MazeReader read = new MazeReader();
-		 String [][] m = read.readFile("maze4.txt");
+		 String [][] m = read.readFile("maze10.txt");
 
 		 Grid output = read.createMaze(m);
 		 DisplayMaze display = new DisplayMaze(output);
